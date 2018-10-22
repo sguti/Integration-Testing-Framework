@@ -1,0 +1,65 @@
+.top-bar-wrapper {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: 1;
+  height: 25px;
+  background-color: #646b73;
+  display: flex;
+  align-items: center;
+}
+.top-bar-wrapper .menu {
+  flex: 2;
+}
+
+.top-bar-wrapper .current-selection {
+  flex: 4;
+  display: flex;
+  align-items: center;
+  color: #afefda;
+}
+
+.top-bar-wrapper .tools {
+  flex: 0.5;
+}
+
+.top-bar-wrapper .user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: row-reverse;
+  color: white;
+  padding-right: 10px;
+}
+
+.current-selection [data-icon="folder"] {
+  color: gold;
+  padding-right: 10px;
+}
+
+.current-selection [data-icon="vial"] {
+  color: #b31616;
+  padding-right: 10px;
+}
+.tools-options-container {
+  display: flex;
+  flex: 1;
+  background-color: #2b333e;
+}
+.tools-options-container [data-icon] {
+  padding: 0px 4px;
+}
+.tools-options-container [data-icon]:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+[data-icon="plus"] {
+  color: silver;
+}
+[data-icon="play"] {
+  color: greenyellow;
+}
+[data-icon="trash"] {
+  color: red;
+}

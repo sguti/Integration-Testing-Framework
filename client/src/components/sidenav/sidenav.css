@@ -1,0 +1,146 @@
+.sidebarToggle {
+}
+.sidenav-content {
+  background-color: #384158;
+  width: 360px;
+  position: absolute;
+  top: 25px;
+  bottom: 0px;
+  z-index: 1;
+}
+
+.sidenav-wrapper [data-icon="times"] {
+  position: absolute;
+  left: 363px;
+  top: 29px;
+  color: white;
+  z-index: 2;
+  cursor: pointer;
+  transform: scale(1.3);
+}
+.sidenav-wrapper [data-icon="bars"] {
+  position: absolute;
+  left: 5px;
+  top: 29px;
+  color: white;
+  z-index: 2;
+  cursor: pointer;
+  transform: scale(1.3);
+}
+.sidenav-primary-toolbar {
+  background-color: #263950;
+  height: 25px;
+  color: rgba(87, 185, 255, 0.9098039215686274);
+  display: flex;
+  align-items: center;
+}
+.sidenav-primary-toolbar svg {
+  margin-left: 8px;
+  cursor: pointer;
+}
+.sidenav-primary-toolbar svg:hover {
+  color: aqua;
+}
+.sidenav-folder-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 10px;
+  padding-top: 4px;
+  color: #acb4b9;
+}
+.sidenav-folder-wrapper .folder-name {
+  padding-left: 6px;
+  flex: 1;
+  justify-content: flex-start;
+  display: flex;
+}
+
+.sidenav-folder-wrapper .folder-header {
+  display: flex;
+  align-items: center;
+}
+
+.sidenav-folder-wrapper .folder-header:hover {
+  cursor: pointer;
+  color: white;
+}
+
+.folder-header:hover .folder-options-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.folder-options-wrapper,
+.test-case-options-wrapper {
+  display: none;
+}
+.folder-options-wrapper > svg,
+.test-case-options-wrapper > svg {
+  transform: scale(0.8);
+}
+.folder-options,
+.test-case-options {
+  display: flex;
+  position: absolute;
+  background-color: #171d67;
+  transform: translateX(-60%);
+  border-radius: 20%;
+  display: none;
+  z-index: 2;
+  padding: 0px 2px;
+}
+.folder-options:hover,
+.test-case-options:hover,
+[data-icon="ellipsis-h"]:hover ~ .test-case-options,
+[data-icon="ellipsis-h"]:hover ~ .folder-options {
+  display: flex;
+}
+
+.folder-options [data-icon="trash"],.test-case-options [data-icon="trash"] {
+  color: red;
+}
+.folder-options [data-icon="play"],.test-case-options [data-icon="play"]{
+  color: greenyellow;
+}
+.folder-options [data-icon="plus"] {
+  color: silver;
+}
+.folder-options svg,.test-case-options svg {
+  transform: scale(0.9);
+  padding: 0px 2px;
+}
+
+.folder-options svg:hover,.test-case-options svg:hover {
+  transform: scale(1.2);
+}
+.folder-content {
+  padding-left: 16px;
+}
+.test-case {
+  display: flex;
+  align-items: center;
+}
+.test-case-name {
+  flex: 1;
+  display: flex;
+  padding-left: 5px;
+}
+
+.test-case [data-icon="vial"] {
+  color: #b31616;
+  transform: scale(0.8);
+}
+.test-case:hover {
+  cursor: pointer;
+}
+.test-case:hover [data-icon="ellipsis-h"]{
+  color: white;
+}
+.test-case:hover .test-case-name {
+  color: white;
+}
+.test-case:hover .test-case-options-wrapper {
+  display: flex;
+  align-items: center;
+}
