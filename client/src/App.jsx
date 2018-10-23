@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Sidenav from "./components/sidenav/sidenav";
 import Topbar from "./components/topbar/topbar";
+import Content from "./components/content/content";
 
 class App extends Component {
   render() {
@@ -10,8 +11,7 @@ class App extends Component {
       <div className="App">
         <Topbar />
         <Sidenav />
-        <div className="App-content">          
-        </div>
+        <Content />
       </div>
     );
   }

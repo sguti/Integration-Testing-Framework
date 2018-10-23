@@ -1,0 +1,11 @@
+.test-case-wrapper{
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    background-color: #0f3a4a;
+}
+.test-case-wrapper .test-case-header{
+    height: 40px;
+    background-color: #082935;
+}

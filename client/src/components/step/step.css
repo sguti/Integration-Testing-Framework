@@ -1,0 +1,15 @@
+.step-wrapper {
+  flex: 1;
+  background-color: #0f3a4a;
+  min-height: 100px;
+}
+.step-connector {  
+  height: 10px;
+  width: 5px;
+}
+.step-header{
+    background-color: #03646d;
+    display: flex;
+    padding-left: 20px;
+    height: 35px;
+}

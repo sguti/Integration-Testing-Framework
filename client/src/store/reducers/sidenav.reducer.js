@@ -45,7 +45,7 @@ function reducer(
         ]
       };
     case ADD_TEST_CASE: {
-      return {
+      let newState = {
         ...state,
         folders: state.folders.map(folder => {
           if (folder.id === action.payload.folderId) {
@@ -60,6 +60,20 @@ function reducer(
           return folder;
         })
       };
+      if (state.currentContext.folder.id === action.payload.folderId) {
+        newState = {
+          ...newState,
+          currentContext: {
+            ...newState.currentContext,
+            folder: {
+              ...newState.folders.find(
+                folder => folder.id === action.payload.folderId
+              )
+            }
+          }
+        };
+      }
+      return newState;
     }
     case ADD_TEST_CASE_STEP: {
       return state;
@@ -82,7 +96,7 @@ function reducer(
       };
     }
     case REMOVE_TEST_CASE: {
-      return {
+      let newState = {
         ...state,
         folders: state.folders.map(folder => {
           if (folder.id === action.payload.folderId) {
@@ -93,6 +107,20 @@ function reducer(
           return folder;
         })
       };
+      if (state.currentContext.folder.id === action.payload.folderId) {
+        newState = {
+          ...newState,
+          currentContext: {
+            ...newState.currentContext,
+            folder: {
+              ...newState.folders.find(
+                folder => folder.id === action.payload.folderId
+              )
+            }
+          }
+        };
+      }
+      return newState;
     }
     case SELECT_TEST_CASE: {
       const currentFolder = state.folders.find(

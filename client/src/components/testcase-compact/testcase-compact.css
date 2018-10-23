@@ -1,0 +1,20 @@
+.test-case-compact-wrapper{
+    display: flex;
+    flex-direction: column;
+    background-color: #0f3a4a;
+    align-self: stretch;    
+    margin-bottom: 2px;
+}
+.test-case-compact-header{
+    padding-left: 25px;
+    display: flex;
+    height: 40px;
+    background-color: #082935;
+}
+.test-case-compact-steps{
+    min-height: 60px;
+}
+
+.test-case-compact-header .test-case-name{
+    cursor: pointer;
+}
