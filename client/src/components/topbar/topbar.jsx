@@ -6,6 +6,7 @@ import {
   removeSidenavFolder,
   addTestCase,
   removeTestCase,
+  runTestCase,
   addTestCaseStep
 } from "../../store/actions/sidenav-action";
 
@@ -50,7 +51,7 @@ class Topbar extends Component {
             </div>
           )}
           {this.props.currentContext.type === "testcase" && (
-            <div className="tools-options-container">             
+            <div className="tools-options-container">
               <div
                 onClick={() =>
                   this.props.onAddTestCaseStep({
@@ -61,7 +62,14 @@ class Topbar extends Component {
               >
                 <FontAwesomeIcon icon="plus" />
               </div>
-              <div>
+              <div
+                onClick={() =>
+                  this.props.onRunTestCase({
+                    folderId: this.props.currentContext.folder.id,
+                    testCaseId: this.props.currentContext.testCase.id
+                  })
+                }
+              >
                 <FontAwesomeIcon icon="play" />
               </div>
             </div>
@@ -85,6 +93,9 @@ const mapDispatchToProps = dispatch => {
     },
     onAddTestCaseStep: payload => {
       dispatch(addTestCaseStep(payload));
+    },
+    onRunTestCase: payload => {
+      dispatch(runTestCase(payload));
     }
   };
 };

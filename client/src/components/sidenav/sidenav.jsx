@@ -8,7 +8,9 @@ import {
   folderIconClick,
   removeTestCase,
   selectFolder,
-  selectTestCase
+  selectTestCase,
+  editFolderName,
+  saveFolderName
 } from "../../store/actions/sidenav-action";
 import { connect } from "react-redux";
 
@@ -55,12 +57,48 @@ class Sidenav extends Component {
                       </div>
                       <span
                         className="folder-name"
-                        onClick={() =>
-                          this.props.onSelectFolder({ folderId: folder.id })
-                        }
+                        onClick={event => {
+                          event.preventDefault();
+                          this.props.onSelectFolder({ folderId: folder.id });
+                        }}
                       >
                         {" "}
-                        {folder.name}
+                        {!folder.editable && folder.name}
+                        {folder.editable && (
+                          <input
+                            type="text"
+                            autoFocus="true"
+                            value={folder.name}
+                            onClick={event => {
+                              event.preventDefault();
+                            }}
+                            onBlur={event => {
+                              event.preventDefault();
+                              this.props.onSaveFolderName({
+                                folderId: folder.id,
+                                blur: true,
+                                folderName: event.target.value
+                              });
+                            }}
+                            onChange={event => {
+                              event.preventDefault();
+                              this.props.onSaveFolderName({
+                                folderId: folder.id,
+                                folderName: event.target.value
+                              });
+                            }}
+                          />
+                        )}
+                        {!folder.editable && (
+                          <FontAwesomeIcon
+                            icon="pen"
+                            onClick={() =>
+                              this.props.onEditFolderName({
+                                folderId: folder.id
+                              })
+                            }
+                          />
+                        )}
                       </span>
                       <div className="folder-options-wrapper">
                         <FontAwesomeIcon icon="ellipsis-h" />
@@ -93,8 +131,13 @@ class Sidenav extends Component {
                           return (
                             <div className="test-case">
                               <FontAwesomeIcon icon="vial" />
+                              {testCase.isRunning && <div class="loading" />}
                               <span
-                                className="test-case-name"
+                                className={
+                                  testCase.isRunning
+                                    ? "test-case-name running"
+                                    : "test-case-name"
+                                }
                                 onClick={() =>
                                   this.props.onSelectTestCase({
                                     folderId: folder.id,
@@ -143,6 +186,12 @@ const mapDispatchToProps = dispatch => {
     },
     onRemoveFolderClick: payload => {
       dispatch(removeSidenavFolder(payload));
+    },
+    onEditFolderName: payload => {
+      dispatch(editFolderName(payload));
+    },
+    onSaveFolderName: payload => {
+      dispatch(saveFolderName(payload));
     },
     onAddTestCase: payload => {
       dispatch(addTestCase(payload));

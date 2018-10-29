@@ -1,15 +1,80 @@
 .step-wrapper {
   flex: 1;
   background-color: #0f3a4a;
-  min-height: 100px;
+  min-height: 105px;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(5px + 2vmin);
 }
-.step-connector {  
+.step-connector {
   height: 10px;
   width: 5px;
 }
-.step-header{
-    background-color: #03646d;
-    display: flex;
-    padding-left: 20px;
-    height: 35px;
+.step-header {
+  background-color: #03646d;
+  display: flex;
+  padding-left: 20px;
+  height: 35px;
+  font-size: calc(8px + 2vmin);
+  align-items: center;
+}
+.step-type {
+  padding-left: 20px;
+  display: flex;
+  margin-top: 10px;
+}
+.step-type-options {
+  display: flex;
+  flex-direction: column;
+}
+.step-type-options select {
+  background-color: #0f3a4a;
+  color: white;
+  height: 20px;
+}
+
+.step-data {
+  display: flex;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.step-data input {
+  padding: 5px 2px;
+  width: 50%;
+  background-color: #0f3a4a;
+  color: white;
+  border: none;
+  border: 1px solid #2f6173;
+  outline: none;
+}
+
+.step-data textarea {
+  padding: 5px 2px;
+  width: 50%;
+  background-color: #0f3a4a;
+  color: white;
+  border: none;
+  border: 1px solid #2f6173;
+  outline: none;
+}
+
+
+.step-wrapper .step-header [data-icon="pen"] {
+  display: none;
+}
+.step-wrapper .step-header:hover [data-icon="pen"],
+.step-wrapper .step-header [data-icon="pen"]:hover {
+  display: block;
+  transform: scale(0.8);
+  padding-left: 10px;
+  cursor: pointer;
+}
+.step-wrapper .step-header input {
+  font-size: calc(8px + 2vmin);
+  background-color: #03646d;
+  border: none;
+  color: #54e64a;
+  outline: none;  
 }

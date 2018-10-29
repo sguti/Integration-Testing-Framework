@@ -1,11 +1,32 @@
-.test-case-wrapper{
-    flex: 1;
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    background-color: #0f3a4a;
+.test-case-wrapper {
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  background-color: #0f3a4a;
 }
-.test-case-wrapper .test-case-header{
-    height: 40px;
-    background-color: #082935;
+.test-case-wrapper .test-case-header {
+  height: 40px;
+  background-color: #082935;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.test-case-wrapper .test-case-header [data-icon="pen"] {
+  display: none;
+}
+.test-case-wrapper .test-case-header:hover [data-icon="pen"],
+.test-case-wrapper .test-case-header [data-icon="pen"]:hover {
+  display: block;
+  transform: scale(0.8);
+  padding-left: 10px;
+  cursor: pointer;
+}
+.test-case-wrapper .test-case-header input {
+  font-size: calc(10px + 2vmin);
+  background-color: #082935;
+  border: none;
+  color: #54e64a;
+  outline: none;
 }

@@ -8,7 +8,14 @@ import {
   SELECT_FOLDER,
   ADD_TEST_CASE_STEP,
   REMOVE_TEST_CASE_STEP,
-  EDIT_TEST_CASE_STEP
+  EDIT_TEST_CASE_STEP,
+  UPDATE_TEST_CASE_STEP,
+  EDIT_FOLDER_NAME,
+  SAVE_FOLDER_NAME,
+  EDIT_TEST_CASE_NAME,
+  SAVE_TEST_CASE_NAME,
+  RUN_TEST_CASE,
+  RUN_TEST_CASE_COMPLETE
 } from "../action-types/sidenav-action.type";
 
 function reducer(
@@ -44,6 +51,29 @@ function reducer(
           )
         ]
       };
+    case EDIT_FOLDER_NAME: {
+      return {
+        ...state,
+        folders: state.folders.map(folder => {
+          if (folder.id === action.payload.folderId) {
+            folder.editable = true;
+          }
+          return folder;
+        })
+      };
+    }
+    case SAVE_FOLDER_NAME: {
+      return {
+        ...state,
+        folders: state.folders.map(folder => {
+          if (folder.id === action.payload.folderId) {
+            folder.editable = !action.payload.blur;
+            folder.name = action.payload.folderName;
+          }
+          return folder;
+        })
+      };
+    }
     case ADD_TEST_CASE: {
       let newState = {
         ...state,
@@ -91,9 +121,148 @@ function reducer(
             .length + 1}`,
           name: `Step ${state.folders[folderIndex].testCases[testCaseIndex]
             .steps.length + 1}`,
-          type: "",
+          featureId: 1,
           data: ""
         }
+      ];
+      state.folders[folderIndex].testCases = [
+        ...state.folders[folderIndex].testCases
+      ];
+      return {
+        ...state,
+        folders: [...state.folders],
+        currentContext: {
+          ...state.currentContext,
+          testCase: {
+            ...state.folders[folderIndex].testCases[testCaseIndex]
+          }
+        }
+      };
+    }
+    case EDIT_TEST_CASE_NAME: {
+      const folderIndex = state.folders.findIndex(
+        folder => folder.id === action.payload.folderId
+      );
+      const testCaseIndex = state.folders[folderIndex].testCases.findIndex(
+        testCase => testCase.id === action.payload.testCaseId
+      );
+      state.folders[folderIndex].testCases[testCaseIndex] = {
+        ...state.folders[folderIndex].testCases[testCaseIndex],
+        nameEditable: true
+      };
+      state.folders[folderIndex].testCases = [
+        ...state.folders[folderIndex].testCases
+      ];
+      return {
+        ...state,
+        folders: [...state.folders],
+        currentContext: {
+          ...state.currentContext,
+          testCase: {
+            ...state.folders[folderIndex].testCases[testCaseIndex]
+          }
+        }
+      };
+    }
+    case SAVE_TEST_CASE_NAME: {
+      const folderIndex = state.folders.findIndex(
+        folder => folder.id === action.payload.folderId
+      );
+      const testCaseIndex = state.folders[folderIndex].testCases.findIndex(
+        testCase => testCase.id === action.payload.testCaseId
+      );
+      state.folders[folderIndex].testCases[testCaseIndex] = {
+        ...state.folders[folderIndex].testCases[testCaseIndex],
+        nameEditable: !action.payload.blur,
+        name: action.payload.testCaseName
+      };
+      state.folders[folderIndex].testCases = [
+        ...state.folders[folderIndex].testCases
+      ];
+      return {
+        ...state,
+        folders: [...state.folders],
+        currentContext: {
+          ...state.currentContext,
+          testCase: {
+            ...state.folders[folderIndex].testCases[testCaseIndex]
+          },
+          name: `${state.folders[folderIndex].name}/${
+            state.folders[folderIndex].testCases[testCaseIndex].name
+          }`
+        }
+      };
+    }
+    case RUN_TEST_CASE: {
+      const folderIndex = state.folders.findIndex(
+        folder => folder.id === action.payload.folderId
+      );
+      const testCaseIndex = state.folders[folderIndex].testCases.findIndex(
+        testCase => testCase.id === action.payload.testCaseId
+      );
+      state.folders[folderIndex].testCases[testCaseIndex] = {
+        ...state.folders[folderIndex].testCases[testCaseIndex],
+        isRunning: true
+      };
+      state.folders[folderIndex].testCases = [
+        ...state.folders[folderIndex].testCases
+      ];
+      return {
+        ...state,
+        folders: [...state.folders],
+        currentContext: {
+          ...state.currentContext,
+          testCase: {
+            ...state.folders[folderIndex].testCases[testCaseIndex]
+          }
+        }
+      };
+    }
+    case RUN_TEST_CASE_COMPLETE: {
+      const folderIndex = state.folders.findIndex(
+        folder => folder.id === action.payload.folderId
+      );
+      const testCaseIndex = state.folders[folderIndex].testCases.findIndex(
+        testCase => testCase.id === action.payload.testCaseId
+      );
+      state.folders[folderIndex].testCases[testCaseIndex] = {
+        ...state.folders[folderIndex].testCases[testCaseIndex],
+        isRunning: false
+      };
+      state.folders[folderIndex].testCases = [
+        ...state.folders[folderIndex].testCases
+      ];
+      return {
+        ...state,
+        folders: [...state.folders],
+        currentContext: {
+          ...state.currentContext,
+          testCase: {
+            ...state.folders[folderIndex].testCases[testCaseIndex]
+          }
+        }
+      };
+    }
+    case UPDATE_TEST_CASE_STEP: {
+      const folderIndex = state.folders.findIndex(
+        folder => folder.id === action.payload.folderId
+      );
+      const testCaseIndex = state.folders[folderIndex].testCases.findIndex(
+        testCase => testCase.id === action.payload.testCaseId
+      );
+      const stepIndex = state.folders[folderIndex].testCases[
+        testCaseIndex
+      ].steps.findIndex(step => step.id === action.payload.stepId);
+      state.folders[folderIndex].testCases[testCaseIndex].steps[stepIndex] = {
+        ...state.folders[folderIndex].testCases[testCaseIndex].steps[stepIndex],
+        ...action.payload.delta
+      };
+
+      state.folders[folderIndex].testCases = [
+        ...state.folders[folderIndex].testCases
+      ];
+      state.folders[folderIndex].testCases[testCaseIndex].steps = [
+        ...state.folders[folderIndex].testCases[testCaseIndex].steps
       ];
       state.folders[folderIndex].testCases = [
         ...state.folders[folderIndex].testCases

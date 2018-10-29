@@ -12,7 +12,8 @@ import {
   faCog,
   faPlay,
   faTrash,
-  faEllipsisH
+  faEllipsisH,
+  faPen
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faUser);
@@ -28,3 +29,4 @@ library.add(faVial);
 library.add(faPlay);
 library.add(faTrash);
 library.add(faEllipsisH);
+library.add(faPen);

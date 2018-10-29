@@ -3,7 +3,8 @@ import sidenavReducer from "./sidenav.reducer";
 import contextReducer from "./context.reducer";
 
 const reducer = combineReducers({
-  sidenav: sidenavReducer
+  sidenav: sidenavReducer,
+  features: contextReducer
 });
 
 export default reducer;
