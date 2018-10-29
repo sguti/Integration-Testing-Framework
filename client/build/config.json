@@ -1,0 +1,6 @@
+{
+  "server": {
+    "base": "https://google.com"
+  },
+  "supportedFeatures": "features.json"
+}
