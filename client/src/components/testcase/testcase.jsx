@@ -11,12 +11,13 @@ class TestCase extends Component {
       <div className="test-case-wrapper">
         <div className="test-case-header">{this.props.testCase.name}</div>
         <div className="test-case-steps">
-          <Step />
-          <Step />
-          <Step />
-          <Step />
-          <Step />
-          <Step />
+          {this.props.testCase.steps.map(step => {
+            return (
+              <div key={step.id}>
+                <Step step={step} />
+              </div>
+            );
+          })}
         </div>
       </div>
     );

@@ -18,7 +18,7 @@ function reducer(
     currentContext: {
       type: "none",
       name: "",
-      folder: null,
+      folder: {},
       testcase: null
     }
   },
@@ -76,7 +76,38 @@ function reducer(
       return newState;
     }
     case ADD_TEST_CASE_STEP: {
-      return state;
+      const folderIndex = state.folders.findIndex(
+        folder => folder.id === action.payload.folderId
+      );
+      const testCaseIndex = state.folders[folderIndex].testCases.findIndex(
+        testCase => testCase.id === action.payload.testCaseId
+      );
+      state.folders[folderIndex].testCases[testCaseIndex].steps = [
+        ...state.folders[folderIndex].testCases[testCaseIndex].steps,
+        {
+          id: `${state.folders[folderIndex].id}_testcase_${
+            state.folders[folderIndex].testCases[testCaseIndex].id
+          }_step_${state.folders[folderIndex].testCases[testCaseIndex].steps
+            .length + 1}`,
+          name: `Step ${state.folders[folderIndex].testCases[testCaseIndex]
+            .steps.length + 1}`,
+          type: "",
+          data: ""
+        }
+      ];
+      state.folders[folderIndex].testCases = [
+        ...state.folders[folderIndex].testCases
+      ];
+      return {
+        ...state,
+        folders: [...state.folders],
+        currentContext: {
+          ...state.currentContext,
+          testCase: {
+            ...state.folders[folderIndex].testCases[testCaseIndex]
+          }
+        }
+      };
     }
     case REMOVE_TEST_CASE_STEP: {
       return state;

@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import {
   removeSidenavFolder,
   addTestCase,
-  removeTestCase
+  removeTestCase,
+  addTestCaseStep
 } from "../../store/actions/sidenav-action";
 
 class Topbar extends Component {
@@ -49,19 +50,16 @@ class Topbar extends Component {
             </div>
           )}
           {this.props.currentContext.type === "testcase" && (
-            <div className="tools-options-container">
-              <div onClick={() => 1}>
-                <FontAwesomeIcon icon="plus" />
-              </div>
+            <div className="tools-options-container">             
               <div
                 onClick={() =>
-                  this.props.onRemoveTestCase({
+                  this.props.onAddTestCaseStep({
                     folderId: this.props.currentContext.folder.id,
                     testCaseId: this.props.currentContext.testCase.id
                   })
                 }
               >
-                <FontAwesomeIcon icon="trash" />
+                <FontAwesomeIcon icon="plus" />
               </div>
               <div>
                 <FontAwesomeIcon icon="play" />
@@ -85,8 +83,8 @@ const mapDispatchToProps = dispatch => {
     onAddTestCase: payload => {
       dispatch(addTestCase(payload));
     },
-    onRemoveTestCase: payload => {
-      dispatch(removeTestCase(payload));
+    onAddTestCaseStep: payload => {
+      dispatch(addTestCaseStep(payload));
     }
   };
 };

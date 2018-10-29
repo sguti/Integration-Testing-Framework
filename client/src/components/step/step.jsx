@@ -7,7 +7,10 @@ class Step extends Component {
   render() {
     return (
       <div className="step-wrapper">
-        <div className="step-header">Test Case Step</div>
+        <div className="step-header">{this.props.step.name}</div>     
+           div
+
+
         <div className="step-data" />
       </div>
     );
