@@ -140,17 +140,32 @@ export function saveTestCaseStepName(payload) {
 }
 
 export function runTestCase(payload) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({
       type: RUN_TEST_CASE,
       payload
     });
     return new Promise(resolve => {
       setTimeout(() => {
+        const folder = getState().sidenav.folders.find(
+          folder => folder.id === payload.folderId
+        );
+        const testCase = folder.testCases.find(
+          testCase => testCase.id === payload.testCaseId
+        );
         resolve();
         dispatch({
           type: RUN_TEST_CASE_COMPLETE,
-          payload
+          payload: {
+            ...payload,
+            response: testCase.steps.map(step => ({
+              stepId:step.id,
+              pass:true,
+              startTime:+Date.now(),
+              endTime:+Date.now(),
+              image:(step.featureId == 3) && "/sample.png"
+            }))
+          }
         });
       }, 2000);
     });

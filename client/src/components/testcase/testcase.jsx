@@ -58,10 +58,16 @@ class TestCase extends Component {
           {this.props.testCase.steps.map(step => {
             return (
               <div key={step.id}>
-                <Step
+                <Step                  
                   step={step}
                   folderId={this.props.folderId}
                   testCaseId={this.props.testCase.id}
+                  lastExecutionData={
+                    this.props.testCase.history[0] &&
+                    this.props.testCase.history[0].find(
+                      data => data.stepId == step.id
+                    )
+                  }
                 />
               </div>
             );

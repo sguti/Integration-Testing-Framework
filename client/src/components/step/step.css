@@ -42,7 +42,7 @@
 
 .step-data input {
   padding: 5px 2px;
-  width: 50%;
+  width: 100%;
   background-color: #0f3a4a;
   color: white;
   border: none;
@@ -52,14 +52,13 @@
 
 .step-data textarea {
   padding: 5px 2px;
-  width: 50%;
+  width: 100%;
   background-color: #0f3a4a;
   color: white;
   border: none;
   border: 1px solid #2f6173;
   outline: none;
 }
-
 
 .step-wrapper .step-header [data-icon="pen"] {
   display: none;
@@ -76,5 +75,60 @@
   background-color: #03646d;
   border: none;
   color: #54e64a;
-  outline: none;  
+  outline: none;
+}
+.step-container {
+  display: flex;
+}
+.step-data-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.step-reponse-wrapper {
+  display: flex;
+  flex: 1;
+  color: #bdbdef;
+}
+.response-row-wrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 40px;
+  margin-top: 10px;
+}
+.response-row {
+  display: flex;
+}
+.response-row-image {
+  display: flex;
+  flex-direction: column;
+}
+.response-row-image .label {
+  display: flex;
+}
+.response-row-image img {
+  height: 300px;
+  border: 1px solid;
+}
+.response-row-image .image-wrapper {
+  display: flex;
+}
+.response-row .label {
+  display: flex;
+  flex: 1;
+}
+.response-row .data {
+  display: flex;
+  flex: 4;
+}
+
+.response-row .data.Pass {
+  font-weight: bold;
+  color: #54e64a;
+}
+
+.response-row .data.Fail {
+  font-weight: bold;
+  color: red;
 }

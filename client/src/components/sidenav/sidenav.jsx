@@ -131,7 +131,7 @@ class Sidenav extends Component {
                           return (
                             <div className="test-case">
                               <FontAwesomeIcon icon="vial" />
-                              {testCase.isRunning && <div class="loading" />}
+                              {testCase.isRunning && <div className="loading" />}
                               <span
                                 className={
                                   testCase.isRunning

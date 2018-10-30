@@ -227,6 +227,36 @@ function reducer(
       );
       state.folders[folderIndex].testCases[testCaseIndex] = {
         ...state.folders[folderIndex].testCases[testCaseIndex],
+        isRunning: false,
+        // history: state.folders[folderIndex].testCases[testCaseIndex].history.concat([action.payload.response])
+        history: [
+          action.payload.response,
+          ...state.folders[folderIndex].testCases[testCaseIndex].history
+        ]
+      };
+      state.folders[folderIndex].testCases = [
+        ...state.folders[folderIndex].testCases
+      ];
+      return {
+        ...state,
+        folders: [...state.folders],
+        currentContext: {
+          ...state.currentContext,
+          testCase: {
+            ...state.folders[folderIndex].testCases[testCaseIndex]
+          }
+        }
+      };
+    }
+    case RUN_TEST_CASE_COMPLETE: {
+      const folderIndex = state.folders.findIndex(
+        folder => folder.id === action.payload.folderId
+      );
+      const testCaseIndex = state.folders[folderIndex].testCases.findIndex(
+        testCase => testCase.id === action.payload.testCaseId
+      );
+      state.folders[folderIndex].testCases[testCaseIndex] = {
+        ...state.folders[folderIndex].testCases[testCaseIndex],
         isRunning: false
       };
       state.folders[folderIndex].testCases = [
