@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import "./sidenav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  addNewSidenavFolder,
-  removeSidenavFolder,
-  addTestCase,
-  folderIconClick,
-  removeTestCase,
-  selectFolder,
-  selectTestCase,
+  addFolder,
+  removeFolder,
   editFolderName,
-  saveFolderName
-} from "../../store/actions/sidenav-action";
+  saveFolderName,
+  toggleFolderView
+} from "../../store/actions/folder-action";
+import {
+  addTestCase,
+  removeTestCase
+} from "../../store/actions/testcase-action";
+
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 class Sidenav extends Component {
   constructor(props) {
@@ -55,15 +57,13 @@ class Sidenav extends Component {
                         {folder.open && <FontAwesomeIcon icon="folder-open" />}
                         {!folder.open && <FontAwesomeIcon icon="folder" />}
                       </div>
-                      <span
-                        className="folder-name"
-                        onClick={event => {
-                          event.preventDefault();
-                          this.props.onSelectFolder({ folderId: folder.id });
-                        }}
-                      >
+                      <span className="folder-name">
                         {" "}
-                        {!folder.editable && folder.name}
+                        {!folder.editable && (
+                          <NavLink to={"/folder/" + folder.id}>
+                            {folder.name}
+                          </NavLink>
+                        )}
                         {folder.editable && (
                           <input
                             type="text"
@@ -126,48 +126,51 @@ class Sidenav extends Component {
                       </div>
                     </div>
                     <div className="folder-content">
-                      {folder.open &&
-                        folder.testCases.map(testCase => {
-                          return (
-                            <div className="test-case">
-                              <FontAwesomeIcon icon="vial" />
-                              {testCase.isRunning && <div className="loading" />}
-                              <span
-                                className={
-                                  testCase.isRunning
-                                    ? "test-case-name running"
-                                    : "test-case-name"
-                                }
-                                onClick={() =>
-                                  this.props.onSelectTestCase({
-                                    folderId: folder.id,
-                                    testCaseId: testCase.id
-                                  })
-                                }
+                      {(
+                        this.props.testCasesByFolder.find(
+                          item => item.folderId === folder.id
+                        ) || { testCases: [] }
+                      ).testCases.map(testCase => {
+                        return (
+                          <div className="test-case">
+                            <FontAwesomeIcon icon="vial" />
+                            {testCase.isRunning && <div className="loading" />}
+                            <span
+                              className={
+                                testCase.isRunning
+                                  ? "test-case-name running"
+                                  : "test-case-name"
+                              }
+                            >
+                              <NavLink
+                                to={`/folder/${folder.id}/testcase/${
+                                  testCase.id
+                                }`}
                               >
                                 {testCase.name}
-                              </span>
-                              <div className="test-case-options-wrapper">
-                                <FontAwesomeIcon icon="ellipsis-h" />
-                                <div className="test-case-options">
-                                  <div
-                                    onClick={() =>
-                                      this.props.onRemoveTestCase({
-                                        folderId: folder.id,
-                                        testCaseId: testCase.id
-                                      })
-                                    }
-                                  >
-                                    <FontAwesomeIcon icon="trash" />
-                                  </div>
-                                  <div>
-                                    <FontAwesomeIcon icon="play" />
-                                  </div>
+                              </NavLink>
+                            </span>
+                            <div className="test-case-options-wrapper">
+                              <FontAwesomeIcon icon="ellipsis-h" />
+                              <div className="test-case-options">
+                                <div
+                                  onClick={() =>
+                                    this.props.onRemoveTestCase({
+                                      folderId: folder.id,
+                                      testCaseId: testCase.id
+                                    })
+                                  }
+                                >
+                                  <FontAwesomeIcon icon="trash" />
+                                </div>
+                                <div>
+                                  <FontAwesomeIcon icon="play" />
                                 </div>
                               </div>
                             </div>
-                          );
-                        })}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 );
@@ -182,10 +185,10 @@ class Sidenav extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     onAddFolderClick: () => {
-      dispatch(addNewSidenavFolder());
+      dispatch(addFolder());
     },
     onRemoveFolderClick: payload => {
-      dispatch(removeSidenavFolder(payload));
+      dispatch(removeFolder(payload));
     },
     onEditFolderName: payload => {
       dispatch(editFolderName(payload));
@@ -197,23 +200,18 @@ const mapDispatchToProps = dispatch => {
       dispatch(addTestCase(payload));
     },
     onFolderIconClick: payload => {
-      dispatch(folderIconClick(payload));
+      dispatch(toggleFolderView(payload));
     },
     onRemoveTestCase: payload => {
       dispatch(removeTestCase(payload));
-    },
-    onSelectFolder: payload => {
-      dispatch(selectFolder(payload));
-    },
-    onSelectTestCase: payload => {
-      dispatch(selectTestCase(payload));
     }
   };
 };
 
 const mapStateToProps = state => {
   return {
-    folders: state.sidenav.folders
+    folders: state.folders.folders,
+    testCasesByFolder: state.testCases.testCasesByFolder
   };
 };
 

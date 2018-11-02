@@ -9,8 +9,16 @@ import {
   runTestCase,
   addTestCaseStep
 } from "../../store/actions/sidenav-action";
+import { withRouter } from "react-router-dom";
 
 class Topbar extends Component {
+  unregisterListner = null;
+  componentDidMount() {
+    this.unregisterListner = this.props.history.listen(change => console.log);
+  }
+  componentWillUnMount() {
+    this.unregisterListner();
+  }
   render() {
     return (
       <div className="top-bar-wrapper">
@@ -22,7 +30,7 @@ class Topbar extends Component {
           {this.props.currentContext.type === "testcase" && (
             <FontAwesomeIcon icon="vial" />
           )}
-          <span>{this.props.currentContext.name}</span>
+          <span>{this.props.currentContext.name || this.props.pathname}</span>
         </div>
         <div className="tools">
           {this.props.currentContext.type === "folder" && (
@@ -102,11 +110,16 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    currentContext: state.sidenav.currentContext
+    currentContext: state.sidenav.currentContext,
+    pathname: state.router.location.pathname,
+    search: state.router.location.search,
+    hash: state.router.location.hash
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Topbar);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Topbar)
+);

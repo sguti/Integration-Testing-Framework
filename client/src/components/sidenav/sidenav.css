@@ -54,6 +54,11 @@
   padding-top: 4px;
   color: #acb4b9;
 }
+.sidenav-folder-wrapper a{
+  color: #acb4b9;
+  text-decoration: none;
+}
+
 .sidenav-folder-wrapper .folder-name {
   padding-left: 6px;
   flex: 1;
@@ -82,6 +87,11 @@
 }
 
 .sidenav-folder-wrapper .folder-header:hover {
+  cursor: pointer;
+  color: white;
+}
+
+.sidenav-folder-wrapper .folder-name a:hover {
   cursor: pointer;
   color: white;
 }
